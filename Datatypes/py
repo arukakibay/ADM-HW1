@@ -1,0 +1,95 @@
+#List Comprehensions
+
+if __name__ == '__main__':
+    x = int(raw_input())
+    y = int(raw_input())
+    z = int(raw_input())
+    n = int(raw_input())
+    
+
+print([[a, b, c] for a in range(x+1) for b in range(y+1) for c in range(z+1) if a + b + c != n])
+
+#Nested Lists
+
+
+def second_lowests(grades): #https://stackoverflow.com/questions/52206413/sorting-nested-lists-for-second-lowest-score
+    """
+    returns list of names of students with second lowest score
+    """
+    # intialize the `lowest` and second lowest `slowest` score and names
+    grades = iter(grades)
+    lname, lowest = next(grades)
+    slname, slowest = next(grades)
+    if slowest < lowest:
+        lowest, slowest = slowest, lowest
+        names = [lname]
+    elif slowest == lowest: # we don't know, if lowest can be second lowest!
+        names = [lname, slname]
+    else:
+        names = [slname]
+
+    for name, score in grades:
+        if score == slowest:
+            names.append(name)
+            continue
+        if score == lowest:
+            continue
+        if score < lowest:
+            if slowest == lowest:
+                pass
+            else:
+                names = [lname]
+            lowest, slowest = score, lowest
+            lname = name
+        elif score < slowest:
+            slowest = score
+            names = [name]
+        elif score > slowest and slowest == lowest:
+            slowest = score
+            names = [name]
+
+    if slowest == lowest: # all have same score
+        return []
+    names.sort()
+    return names
+
+
+if __name__ == '__main__':
+    nested_list = []
+    for _ in range(int(raw_input())):
+        name = raw_input()
+        score = float(raw_input())
+        nested_list.append([name, score])
+    assert 2 <= len(nested_list) <= 5
+    print ("\n".join(second_lowests(nested_list)))
+    
+ #Lists
+ if __name__ == '__main__':
+    #https://github.com/STiago/Python/blob/master/Questions/1Lists.md
+    N = int(raw_input())
+    
+    list = []
+    
+    for i in range(N): 
+        option = raw_input().split()
+        if option[0] == 'print':
+            print(list)
+        elif option[0] == 'sort':
+            list.sort()
+        elif option[0] == 'remove':
+            list.remove(int(option[1]))
+        elif option[0] == 'append':
+            list.append(int(option[1]))
+        elif option[0] == 'insert':
+            list.insert(int(option[1]),int(option[2]))
+        elif option[0] == 'reverse':
+            list.reverse()
+        elif option[0] == 'pop':
+            list.pop()
+#Tuples
+if __name__ == '__main__':#https://github.com/STiago/Python/blob/master/Questions/2Tuples.md
+    n = int(raw_input())
+    integer_list = map(int, raw_input().split())
+    t = tuple(integer_list)
+    print(hash(t))
+
